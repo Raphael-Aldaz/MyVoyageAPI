@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class HotelServiceImpl implements HotelService {
     @Autowired
@@ -19,5 +21,24 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public Page<Hotel> getAllHotels(PageRequest pageRequest) {
         return hotelRepository.findAll(pageRequest);
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Optional<Hotel> readTraining(Long id) {
+        return hotelRepository.findById(id);
+    }
+
+    /**
+     * @param pageRequest
+     * @param id
+     * @return
+     */
+    @Override
+    public Page<Hotel> getHotelsByCity(PageRequest pageRequest, Long id) {
+        return hotelRepository.getHotelsByCityId(pageRequest, id);
     }
 }

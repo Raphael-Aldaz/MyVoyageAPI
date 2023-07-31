@@ -8,4 +8,5 @@ import java.util.List;
 public interface CityService {
     public City saveCity(City city);
     public List<City> getAllCities();
+    public List<City> searchCitiesByName(String kw);
 }

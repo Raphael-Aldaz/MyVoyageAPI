@@ -7,12 +7,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import com.sun.istack.NotNull;
+
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor(force = true)
-public class City {
+public class City implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,8 +27,8 @@ public class City {
     @NotNull
     private String country;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "city")
     @JsonIgnore
-    private List<Hotel> hotels;
+    private Collection<Hotel> hotels;
 
 }

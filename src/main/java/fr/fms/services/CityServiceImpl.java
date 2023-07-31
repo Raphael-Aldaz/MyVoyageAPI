@@ -26,4 +26,13 @@ public class CityServiceImpl implements CityService {
     public List<City> getAllCities() {
         return cityRepository.findAll();
     }
+
+    /**
+     * @param kw
+     * @return
+     */
+    @Override
+    public List<City> searchCitiesByName(String kw) {
+        return cityRepository.findCitiesByNameContains(kw);
+    }
 }

@@ -24,4 +24,5 @@ public class CityController {
         return ResponseEntity.ok().body(allCities);
     }
 
+
 }
