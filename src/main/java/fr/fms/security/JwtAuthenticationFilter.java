@@ -48,15 +48,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("roles", springUser.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(Algorithm.HMAC256(SecurityConstants.SECRET));
 
-//        String refreshToken = JWT.create()
-//                .withSubject(springUser.getUsername())
-//                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME * SecurityConstants.EXPIRATION_TIME))
-//                .withIssuer(request.getRequestURL().toString())
-//                .sign(Algorithm.HMAC256(SecurityConstants.SECRET));
+        String refreshToken = JWT.create()
+                .withSubject(springUser.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME * SecurityConstants.EXPIRATION_TIME))
+                .withIssuer(request.getRequestURL().toString())
+                .sign(Algorithm.HMAC256(SecurityConstants.SECRET));
 
         Map<String, String> allTokens = new HashMap<>();
         allTokens.put("acces-token", jwtToken);
-        //allTokens.put("refresh-token" , refreshToken);
+        allTokens.put("refresh-token" , refreshToken);
         response.setContentType("application/json");
         new ObjectMapper().writeValue(response.getOutputStream(), allTokens);
 

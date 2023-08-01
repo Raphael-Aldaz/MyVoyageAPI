@@ -44,32 +44,22 @@ public class HotelsController {
         PageRequest pageRequest = PageRequest.of(page,6);
         Page<Hotel> listHotel = hotelService.getHotelsByCity(pageRequest, (long) id);
         return ResponseEntity.ok().body(listHotel);
-
     }
-    @GetMapping("/hotelsKw")
+    @GetMapping("/hotelsByDest")
     public ResponseEntity<Page<Hotel>> searchCitiesByKeyword(@RequestParam("page") int page,
                                                             @RequestParam("kw") String keyword) {
-        List<City> cities = cityService.searchCitiesByName(keyword);
-        City city = cities.get(0);
-        Long id = city.getId();
-        PageRequest pageRequest = PageRequest.of(page,6);
-
-        Page<Hotel> hotels = hotelService.getHotelsByCity(pageRequest, id);
-        if (hotels.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(hotels, HttpStatus.OK);
-        }
-    }
-    @GetMapping
-    public ResponseEntity<List<City>> searchCitiesByKeywordzzz(@RequestParam("kw") String keyword) {
         List<City> cities = cityService.searchCitiesByName(keyword);
         if (cities.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            return new ResponseEntity<>(cities, HttpStatus.OK);
+            City city = cities.get(0);
+            Long id = city.getId();
+            PageRequest pageRequest = PageRequest.of(page,6);
+            Page<Hotel> hotels = hotelService.getHotelsByCity(pageRequest, id);
+            return new ResponseEntity<>(hotels, HttpStatus.OK);
         }
     }
+
 
     @GetMapping(path="/photo/{id}",produces = MediaType.IMAGE_PNG_VALUE)
     public ResponseEntity<?> getPhoto(@PathVariable("id") Long id) throws IOException {
