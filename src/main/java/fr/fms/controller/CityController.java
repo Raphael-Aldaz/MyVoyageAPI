@@ -4,7 +4,9 @@ import fr.fms.entities.City;
 import fr.fms.services.CityServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class CityController {
     @Autowired
     private CityServiceImpl cityService;

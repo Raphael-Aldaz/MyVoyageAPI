@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class HotelsController {
     @Autowired
     private HotelServiceImpl hotelService;
