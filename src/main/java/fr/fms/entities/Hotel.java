@@ -1,17 +1,21 @@
 package fr.fms.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import com.sun.istack.NotNull;
+import org.apache.catalina.User;
 
 import java.io.Serializable;
+import java.util.*;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
+@ToString
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor(force = true)
 public class Hotel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -35,4 +39,9 @@ public class Hotel implements Serializable {
     @JoinColumn(name = "city_id")
     @JsonIgnore
     private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private AppUser users;
+
 }

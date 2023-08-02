@@ -32,7 +32,7 @@ public class CityServiceImpl implements CityService {
      * @return
      */
     @Override
-    public List<City> searchCitiesByName(String kw) {
+    public City searchCitiesByName(String kw) {
         return cityRepository.findCitiesByNameContains(kw);
     }
 }

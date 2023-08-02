@@ -41,4 +41,25 @@ public class HotelServiceImpl implements HotelService {
     public Page<Hotel> getHotelsByCity(PageRequest pageRequest, Long id) {
         return hotelRepository.getHotelsByCityId(pageRequest, id);
     }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public Hotel getHotelById(Long id) {
+        return hotelRepository.findById(id).get();
+    }
+
+    /**
+     * @param id
+     */
+    @Override
+    public void deleteHotel(long id) {
+        Optional<Hotel> hotel = hotelRepository.findById(id);
+        if (hotel.isPresent()){
+           Hotel hotelToDelete =  hotel.get();
+            hotelRepository.delete(hotelToDelete);
+        }
+    }
 }

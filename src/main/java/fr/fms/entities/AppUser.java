@@ -1,18 +1,18 @@
 package fr.fms.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
+@ToString
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,7 @@ public class AppUser {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<AppRole> role = new ArrayList<>();
 
-    @ManyToMany
-    private Collection<Hotel> hotels = new ArrayList<>();
+    @OneToMany(mappedBy = "id")
+    private Collection<Hotel> hotels;
+
 }

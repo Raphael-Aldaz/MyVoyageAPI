@@ -13,6 +13,10 @@ public interface HotelService {
     public Optional<Hotel> readTraining(Long id);
     public Page<Hotel>getHotelsByCity(PageRequest pageRequest, Long id);
 
+    public Hotel getHotelById(Long id);
+
+    public void deleteHotel(long id);
+
 
 
 }

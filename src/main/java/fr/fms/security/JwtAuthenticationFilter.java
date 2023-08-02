@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         String jwtToken = null;
         try {
-            User springUser = (User) authResult.getPrincipal();   //récupération des infos sur l'user connecté
+            User springUser = (User) authResult.getPrincipal();//récupération des infos sur l'user connecté
 
             //dès à présent, il faut créer le token Jwt pour l'utilisateur connecté :
             jwtToken = JWT.create()

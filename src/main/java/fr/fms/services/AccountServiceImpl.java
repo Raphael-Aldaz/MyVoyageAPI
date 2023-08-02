@@ -8,6 +8,8 @@ import fr.fms.repositories.AppUserRepository;
 import fr.fms.repositories.HotelRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -54,31 +56,13 @@ public class AccountServiceImpl implements AccountService {
     public AppUser findUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
-    @Override
-    public ResponseEntity<List<AppUser>> listUser() {
-        return ResponseEntity.ok().body(appUserRepository.findAll());
-    }
 
     /**
-     * @param username
-     * @param id
+     * @param pageRequest
+     * @return
      */
     @Override
-    public void addHotelToUser(String username, Long id) {
-        try {
-            Hotel hotel = hotelRepository.findById(id).get();
-            AppUser user = appUserRepository.findByUsername(username);
-            AppRole role = appRoleRepository.findByRoleName("GESTIONNAIRE");
-
-            for(AppRole roles : user.getRole()){
-                if(role.getRoleName() == roles.getRoleName()) {
-                    user.getHotels().add(hotel);
-                    log.info("Association d'un hotel a un gestionnaire");
-                }
-            }
-        } catch (Exception e){
-            log.info(e.getMessage(), "Hotel not added to user");
-        }
-
+    public Page<AppUser> listUser(PageRequest pageRequest) {
+        return appUserRepository.findAll(pageRequest);
     }
 }

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -53,7 +54,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests().anyRequest().permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/hotels/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/hotels/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/hotels/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/hotels/**").permitAll();
+
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/hotel/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/hotel/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/hotel/**").hasAuthority("SUPERVISEUR");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/users/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/users/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/users/**").hasAuthority("SUPERVISEUR");
+
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/user/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/user/**").hasAuthority("SUPERVISEUR");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/user/**").hasAuthority("SUPERVISEUR");
+
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/cities/**").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/city/**").permitAll();
+
+
+
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors().disable();
